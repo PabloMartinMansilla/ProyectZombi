@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class EnemyZombi : Enemy
 {
-    private int timer = 12;
+    private int _timer = 12;
 
     [Header("References")]
-    private Animator animator;
-    private Rigidbody rb;
+    private Animator _animator;
+    private Rigidbody _rb;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
+        _rb = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
         live = 100;
     }
 
@@ -23,7 +23,7 @@ public class EnemyZombi : Enemy
 
         if (!alive)
         {
-            Invoke("Dead", timer);
+            Invoke("Dead", _timer);
         }
     }
 
@@ -39,20 +39,20 @@ public class EnemyZombi : Enemy
             switch (stateEnemy)
             {
                 case StateEnemy.idel:
-                    animator.SetBool("walking", false);
+                    _animator.SetBool("walking", false);
                     break;
                 case StateEnemy.walk:
-                    animator.SetBool("walking", true);
-                    animator.SetBool("attack", false);
+                    _animator.SetBool("walking", true);
+                    _animator.SetBool("attack", false);
                     break;
                 case StateEnemy.attack:
-                    animator.SetBool("attack", true);
+                    _animator.SetBool("attack", true);
                     break;
                 case StateEnemy.specialAttack:
 
                     break;
                 case StateEnemy.dead:
-                    animator.SetBool("death", true);
+                    _animator.SetBool("death", true);
                     alive = false;
                     break;
 

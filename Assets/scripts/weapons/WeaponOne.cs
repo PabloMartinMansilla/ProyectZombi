@@ -9,11 +9,11 @@ public class WeaponOne : MonoBehaviour
 
 {
     [Header("pooling")]
-    private ObjectPool<Bullet> pool;
+    private ObjectPool<Bullet> _pool;
     public bool usePool;
-    private bool collectionCheck = false;
-    private int defaultCapacity = 5;
-    private int maxCapacity = 5;
+    private bool _collectionCheck = false;
+    private int _defaultCapacity = 5;
+    private int _maxCapacity = 5;
 
     [Header("References")]
     public GameObject bulletPrefab;
@@ -21,10 +21,10 @@ public class WeaponOne : MonoBehaviour
     public TextMeshProUGUI textAmmo;
 
     [Header("other")]
-    [SerializeField] private bool pointing = false;
-    [SerializeField] private bool shootingUp = false;
-    private bool shooting = true;
-    private int ammo = 150;
+    [SerializeField] private bool _pointing = false;
+    [SerializeField] private bool _shootingUp = false;
+    private bool _shooting = true;
+    private int _ammo = 150;
 
 
     private void Start()
@@ -32,20 +32,20 @@ public class WeaponOne : MonoBehaviour
 
         if (usePool)
         {
-            pool = new ObjectPool<Bullet>(
+            _pool = new ObjectPool<Bullet>(
             CreatePoolItemObject,
             ReturnedToPool,
             OnTakefromPool,
             OnDestroyPoolObject,
-            collectionCheck,
-            defaultCapacity,
-            maxCapacity);
+            _collectionCheck,
+            _defaultCapacity,
+            _maxCapacity);
         }
 
-        for (int i = 0; i < maxCapacity; i++)
+        for (int i = 0; i < _maxCapacity; i++)
         {
             var bullet = Instantiate(bulletPrefab).GetComponent<Bullet>();
-            pool.Release(bullet);
+            _pool.Release(bullet);
             bullet.gameObject.SetActive(false);
         }
     }
@@ -78,27 +78,27 @@ public class WeaponOne : MonoBehaviour
     private void Update()
     {
 
-        textAmmo.text = ammo.ToString();
+        textAmmo.text = _ammo.ToString();
 
         if (Input.GetMouseButtonDown(1))
         {
-            pointing = true;
+            _pointing = true;
         }
         else if (Input.GetMouseButtonUp(1))
         {
-            pointing = false;
+            _pointing = false;
         }
 
         if (Input.GetMouseButtonDown(0))
         {
-            shootingUp = true;
+            _shootingUp = true;
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            shootingUp = false;
+            _shootingUp = false;
         }
 
-        if (pointing && shootingUp && shooting && ammo > 0)
+        if (_pointing && _shootingUp && _shooting && _ammo > 0)
         {
             StartCoroutine(disparo());
         }
@@ -106,12 +106,12 @@ public class WeaponOne : MonoBehaviour
 
     private IEnumerator disparo()
     {
-        shooting = false;
+        _shooting = false;
 
         Bullet bullet;
-        if (usePool && pool != null)
+        if (usePool && _pool != null)
         {
-            bullet = pool.Get();
+            bullet = _pool.Get();
             bullet.gameObject.SetActive(true);
             bullet.transform.position = spawnBulletPosition.transform.position;
             bullet.transform.rotation = spawnBulletPosition.transform.rotation;
@@ -122,18 +122,18 @@ public class WeaponOne : MonoBehaviour
             bullet = Instantiate(bulletPrefab).GetComponent<Bullet>();
         }
 
-        ammo--;
+        _ammo--;
 
         yield return new WaitForSeconds(0.01f);
 
-        shooting = true;
+        _shooting = true;
     }
 
     private void kill(Bullet bullet)
     {
         if (usePool)
         {
-            pool.Release(bullet);
+            _pool.Release(bullet);
         }
         else
         {

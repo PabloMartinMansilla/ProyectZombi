@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private Vector3 _rotationInput;
     [SerializeField] private float _camVertical;
     public Animator animator;
-    private bool lightbool = false;
+    private bool _lightbool = false;
 
 
     [Header("Speed")]
@@ -113,18 +113,18 @@ public class Player : MonoBehaviour
     private void TurnOnLight()
     {
 
-        if (Input.GetKeyDown(KeyCode.E) && lightbool == false )
+        if (Input.GetKeyDown(KeyCode.E) && _lightbool == false )
         {
-            lightbool = true;
-            light.SetActive(lightbool);
+            _lightbool = true;
+            light.SetActive(_lightbool);
             Debug.Log("se prendio");
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && lightbool == true )
+        if (Input.GetKeyDown(KeyCode.E) && _lightbool == true )
         {
-            lightbool = false;
-            light.SetActive(lightbool);
+            _lightbool = false;
+            light.SetActive(_lightbool);
             Debug.Log("se apago");
             return;
         }

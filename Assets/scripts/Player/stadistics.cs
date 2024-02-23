@@ -8,8 +8,8 @@ using static UnityEngine.Rendering.DebugUI;
 public class stadistics : MonoBehaviour
 {
     [Header("General")]
-    private float inputX;
-    private float inputZ;
+    private float _inputX;
+    private float _inputZ;
 
     [Header("reference")]
     public Animator animator;
@@ -17,21 +17,20 @@ public class stadistics : MonoBehaviour
     public Image shieldReference;
 
     [Header("Live")]
-    private float life = 100;
-    private float shield;
-    private bool live;
+    private float _life = 100;
+    private float _shield;
+    private bool _live;
 
 
     //start the variables
     private void Start()
     {
         //Live
-        life = 100;
-        live = true;
-        shield = 100;
+        _life = 100;
+        _live = true;
+        _shield = 100;
 
     }
-
 
 
 
@@ -47,12 +46,12 @@ public class stadistics : MonoBehaviour
     //controlled variables for animations
     private void MovePlayer()
     {
-        inputX = Input.GetAxis("Horizontal");
-        inputZ = Input.GetAxis("Vertical");
+        _inputX = Input.GetAxis("Horizontal");
+        _inputZ = Input.GetAxis("Vertical");
 
 
-        animator.SetFloat("VelX", inputX);
-        animator.SetFloat("VelZ", inputZ);
+        animator.SetFloat("VelX", _inputX);
+        animator.SetFloat("VelZ", _inputZ);
     }
 
 
@@ -61,19 +60,19 @@ public class stadistics : MonoBehaviour
     //if the enemy collides with the player, it takes his life if he does not have a shield.
     private void TakeLife()
     {
-        if (life <= 100)
+        if (_life <= 100)
         {
 
-            life = life - 5;
-            lifeReference.rectTransform.sizeDelta = new Vector2(life, lifeReference.rectTransform.sizeDelta.y);
-            if (life < 0)
+            _life = _life - 5;
+            lifeReference.rectTransform.sizeDelta = new Vector2(_life, lifeReference.rectTransform.sizeDelta.y);
+            if (_life < 0)
             {
-                live = false;
+                _live = false;
                 //dead
             }
             else
             {
-                live = true;
+                _live = true;
             }
         }
     }
@@ -84,8 +83,8 @@ public class stadistics : MonoBehaviour
     //I take away his shield if he still has it.
     private void TakeShield()
     {
-        shield = shield - 20;
-        shieldReference.rectTransform.sizeDelta = new Vector2(shield , shieldReference.rectTransform.sizeDelta.y);
+        _shield = _shield - 20;
+        shieldReference.rectTransform.sizeDelta = new Vector2(_shield , shieldReference.rectTransform.sizeDelta.y);
     }
 
 
@@ -97,7 +96,7 @@ public class stadistics : MonoBehaviour
     {
         if ( collision.gameObject.CompareTag("Enemy"))
         {
-            if (shield <= 1)
+            if (_shield <= 1)
             {
                 TakeLife();
                 return;

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Drawer : MonoBehaviour, Interactable
 {
-    private Animator anim;
+    private Animator _anim;
 
     public void Interact()
     {
-        anim.SetBool("activate", true);
+        _anim.SetBool("activate", true);
         Debug.Log("funciono");
     }
 
@@ -18,6 +18,6 @@ public class Drawer : MonoBehaviour, Interactable
         boxCollider.size = new Vector3(0.3375741f, 0.294036f, 0.4404921f);
         boxCollider.center = new Vector3(0f, 0f, -0.27f);
         boxCollider.isTrigger = true;
-        anim = gameObject.GetComponent<Animator>();
+        _anim = gameObject.GetComponent<Animator>();
     }
 }
