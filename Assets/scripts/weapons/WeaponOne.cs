@@ -18,13 +18,12 @@ public class WeaponOne : MonoBehaviour
     [Header("References")]
     public GameObject bulletPrefab;
     public GameObject spawnBulletPosition;
-    public TextMeshProUGUI textAmmo;
 
     [Header("other")]
     [SerializeField] private bool _pointing = false;
     [SerializeField] private bool _shootingUp = false;
     private bool _shooting = true;
-    private int _ammo = 150;
+    public int ammo = 150;
 
 
     private void Start()
@@ -78,7 +77,6 @@ public class WeaponOne : MonoBehaviour
     private void Update()
     {
 
-        textAmmo.text = _ammo.ToString();
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -98,7 +96,7 @@ public class WeaponOne : MonoBehaviour
             _shootingUp = false;
         }
 
-        if (_pointing && _shootingUp && _shooting && _ammo > 0)
+        if (_pointing && _shootingUp && _shooting && ammo > 0)
         {
             StartCoroutine(disparo());
         }
@@ -122,7 +120,7 @@ public class WeaponOne : MonoBehaviour
             bullet = Instantiate(bulletPrefab).GetComponent<Bullet>();
         }
 
-        _ammo--;
+        ammo--;
 
         yield return new WaitForSeconds(0.01f);
 

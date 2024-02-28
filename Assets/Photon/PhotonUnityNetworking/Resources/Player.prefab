@@ -15197,9 +15197,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7084513334022704145, guid: 897841d06edd7494e9b71187fe6a7f39,
     type: 3}
   spawnBulletPosition: {fileID: 3715060296307826880}
-  textAmmo: {fileID: 0}
   _pointing: 0
   _shootingUp: 0
+  ammo: 150
 --- !u!1 &7488081403766111447
 GameObject:
   m_ObjectHideFlags: 0
