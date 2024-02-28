@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
-public class stadistics : MonoBehaviour
+public class stadistics : MonoBehaviourPunCallbacks
 {
     [Header("General")]
     private float _inputX;
@@ -37,7 +38,11 @@ public class stadistics : MonoBehaviour
     private void Update()
     {
 
-        MovePlayer();
+        if (photonView.IsMine)
+        {
+
+            MovePlayer();
+        }
     }
 
 
@@ -84,7 +89,7 @@ public class stadistics : MonoBehaviour
     private void TakeShield()
     {
         _shield = _shield - 20;
-        shieldReference.rectTransform.sizeDelta = new Vector2(_shield , shieldReference.rectTransform.sizeDelta.y);
+        shieldReference.rectTransform.sizeDelta = new Vector2(_shield, shieldReference.rectTransform.sizeDelta.y);
     }
 
 
@@ -94,15 +99,21 @@ public class stadistics : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if ( collision.gameObject.CompareTag("Enemy"))
+
+        if (photonView.IsMine)
         {
-            if (_shield <= 1)
+
+            if (collision.gameObject.CompareTag("Enemy"))
             {
-                TakeLife();
-                return;
+                if (_shield <= 1)
+                {
+                    TakeLife();
+                    return;
+                }
+
+                TakeShield();
             }
 
-            TakeShield();
         }
     }
 }

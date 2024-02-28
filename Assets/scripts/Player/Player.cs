@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPunCallbacks
 {
     [Header("reference")]
     public Camera playerCam;
@@ -26,19 +27,30 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("substractBattery", 1.0f, 1.0f);
+
+        if (!photonView.IsMine && playerCam != null)
+        { 
+            playerCam.enabled = false;
+        }
+
     }
 
 
     private void Update()
     {
 
-        walk();
-        Jump();
-        Run();
-        Down();
-        look();
-        TurnOnLight();
+        if (photonView.IsMine)
+        {
+
+            walk();
+            Jump();
+            Run();
+            Down();
+            look();
+            TurnOnLight();
+        }
+
+
     }
 
     private void walk()
@@ -113,7 +125,7 @@ public class Player : MonoBehaviour
     private void TurnOnLight()
     {
 
-        if (Input.GetKeyDown(KeyCode.E) && _lightbool == false )
+        if (Input.GetKeyDown(KeyCode.E) && _lightbool == false)
         {
             _lightbool = true;
             light.SetActive(_lightbool);
@@ -121,7 +133,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.E) && _lightbool == true )
+        if (Input.GetKeyDown(KeyCode.E) && _lightbool == true)
         {
             _lightbool = false;
             light.SetActive(_lightbool);

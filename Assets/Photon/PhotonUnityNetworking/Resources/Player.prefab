@@ -5831,6 +5831,7 @@ GameObject:
   - component: {fileID: 6830770798624053542}
   - component: {fileID: 9086675732743760237}
   - component: {fileID: 7134535280916689124}
+  - component: {fileID: 6208383710073248049}
   m_Layer: 0
   m_Name: Ch15_nonPBR
   m_TagString: Player
@@ -9424,7 +9425,7 @@ Transform:
   - {fileID: 110865720757929924}
   - {fileID: 9169033694545807243}
   m_Father: {fileID: 0}
-  m_RootOrder: 59
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &500120791741209567
 MonoBehaviour:
@@ -19438,5 +19439,36 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 336882185128521390}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5504076600236463838, guid: 83f85b233eb193b4eb66f008ad96a957,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6208383710073248049}
   m_SourcePrefab: {fileID: 100100000, guid: 83f85b233eb193b4eb66f008ad96a957, type: 3}
+--- !u!114 &6208383710073248049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3074516819125593272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: Blend
+  - Type: 1
+    SynchronizeType: 2
+    Name: VelX
+  - Type: 1
+    SynchronizeType: 2
+    Name: VelZ
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
