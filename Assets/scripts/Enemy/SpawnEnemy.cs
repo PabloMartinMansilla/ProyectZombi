@@ -13,7 +13,6 @@ public class SpawnEnemy : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log(timer);
         if (other.gameObject.CompareTag("Player") && timer == 0 && maxEnemy < 6)
         {
             Instantiate(enemy);
