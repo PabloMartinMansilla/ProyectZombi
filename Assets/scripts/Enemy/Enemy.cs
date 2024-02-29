@@ -1,10 +1,11 @@
 //using GLTF.Schema;
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviourPunCallbacks
 {
     [Header("LIVE")]
     protected float live;
@@ -30,6 +31,8 @@ public class Enemy : MonoBehaviour
         dead
     }
     protected StateEnemy stateEnemy;
+
+
 
     //no me acuerdo bien
     public string NameEnemy

@@ -1,14 +1,22 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class EnemyZombi : Enemy
+public class EnemyZombi : Enemy, IPunObservable
 {
+
+
     private int _timer = 12;
 
     [Header("References")]
     private Animator _animator;
     private Rigidbody _rb;
+
+
+
+
 
     private void Start()
     {
@@ -17,25 +25,35 @@ public class EnemyZombi : Enemy
         live = 100;
     }
 
+
+
+
+
     private void Update()
     {
-        animations();
 
-        if (!alive)
+        if (!photonView.IsMine && PhotonNetwork.IsConnected)
         {
-            Invoke("Dead", _timer);
+            animations();
+            if (!alive)
+            {
+                Invoke("Dead", _timer);
+            }
+            return;
         }
+
+
     }
 
-    private void Dead()
-    {
-        Destroy(this.gameObject);
-    }
+
+
+
 
     private void animations()
     {
-        if (alive)
+        if (alive && _animator != null)
         {
+            Debug.Log("camina");
             switch (stateEnemy)
             {
                 case StateEnemy.idel:
@@ -61,11 +79,41 @@ public class EnemyZombi : Enemy
         }
     }
 
+
+
+
+
+    [PunRPC]
+    private void Dead()
+    {
+        Destroy(this.gameObject);
+    }
+
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Bullet") && alive)
         {
             stateEnemy = StateEnemy.dead;
+        }
+    }
+
+
+
+
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(stateEnemy);
+        }
+        else
+        { 
+            transform.position = (Vector3)stream.ReceiveNext();
+            stateEnemy = (StateEnemy)stream.ReceiveNext();
         }
     }
 }

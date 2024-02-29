@@ -18,14 +18,14 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("conectado");
         PhotonNetwork.JoinRandomOrCreateRoom();
 
     }
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("unido");
-        PhotonNetwork.Instantiate(Player.name, spawn.position, spawn.rotation);
+        GameObject player = PhotonNetwork.Instantiate(Player.name, spawn.position, spawn.rotation);
+        Debug.Log(player.name);
+        player.tag = "Player";
     }
 }

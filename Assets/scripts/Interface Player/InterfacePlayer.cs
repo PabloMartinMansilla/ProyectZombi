@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,17 +9,26 @@ public interface Interactable
     void Interact();
 }
 
-public class InterfacePlayer : MonoBehaviour
+public class InterfacePlayer : MonoBehaviourPunCallbacks
 {
     public GameObject[] objects;
 
-
-    private void OnTriggerStay(Collider other)
+    private void Update()
     {
-        if (other.gameObject.CompareTag("Object") && Input.GetKeyDown(KeyCode.F))
+        if (!photonView.IsMine)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            Interactable myInteractable = other.gameObject.GetComponent<Interactable>();
-            myInteractable?.Interact();
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
+            {
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                if (interactable != null)
+                {
+                    interactable.Interact();
+                }
+            }
         }
     }
 

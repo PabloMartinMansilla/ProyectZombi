@@ -2132,10 +2132,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7036285454020997512}
   - component: {fileID: 3982805515424410610}
-  - component: {fileID: 4380649762372255938}
-  - component: {fileID: 3929672362042248213}
-  - component: {fileID: 148987695355248661}
-  - component: {fileID: 9222176442754328851}
+  - component: {fileID: 4583918290619158465}
+  - component: {fileID: 7405444117131981758}
+  - component: {fileID: 12180409772518023}
+  - component: {fileID: 7556185774719192523}
+  - component: {fileID: -6331828942950756822}
   m_Layer: 0
   m_Name: Zombiegirl W Kurniawan
   m_TagString: Untagged
@@ -2151,7 +2152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7705158666044517170}
   m_LocalRotation: {x: -0, y: 0.99891925, z: -0, w: -0.046479933}
-  m_LocalPosition: {x: -21.57, y: 4.699, z: -18.63}
+  m_LocalPosition: {x: -19.24, y: 4.29, z: -20.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2183,7 +2184,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4380649762372255938
+--- !u!114 &4583918290619158465
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2195,7 +2196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444b8b64ba319e64ba198bf514e5d346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &3929672362042248213
+--- !u!136 &7405444117131981758
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2218,7 +2219,7 @@ CapsuleCollider:
   m_Height: 2.15028
   m_Direction: 1
   m_Center: {x: 0.012516914, y: 1.0211692, z: 0.17168559}
---- !u!65 &148987695355248661
+--- !u!65 &12180409772518023
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2239,7 +2240,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.7196045, y: 2.0036316, z: 16.120314}
   m_Center: {x: -1.452761, y: 0.9617605, z: -0.53101826}
---- !u!54 &9222176442754328851
+--- !u!54 &7556185774719192523
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2266,6 +2267,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &-6331828942950756822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7705158666044517170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8209830954275956456
 GameObject:
   m_ObjectHideFlags: 0
