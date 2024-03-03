@@ -11,26 +11,20 @@ public interface Interactable
 
 public class InterfacePlayer : MonoBehaviourPunCallbacks
 {
-    public GameObject[] objects;
 
-    private void Update()
+    private void OnTriggerStay(Collider other)
     {
         if (!photonView.IsMine)
             return;
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && other.gameObject.CompareTag("Object"))
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
-            {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                if (interactable != null)
-                {
-                    interactable.Interact();
-                }
+            Interactable interact = other.gameObject.GetComponent<Interactable>();
+            if (interact != null)
+            { 
+                interact.Interact();
             }
+
         }
     }
-
-
 }

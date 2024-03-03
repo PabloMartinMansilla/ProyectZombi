@@ -23,7 +23,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     }
 
     public override void OnJoinedRoom()
-    {
+    { 
         GameObject player = PhotonNetwork.Instantiate(Player.name, spawn.position, spawn.rotation);
         Debug.Log(player.name);
         player.tag = "Player";

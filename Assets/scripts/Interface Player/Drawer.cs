@@ -1,19 +1,32 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Drawer : MonoBehaviour, Interactable
+public class Drawer : MonoBehaviourPun, Interactable
 {
+
     private Animator _anim;
+
+
 
     public void Interact()
     {
-        _anim.SetBool("activate", true);
-        Debug.Log("funciono");
+        photonView.RPC("Open", RpcTarget.All);
     }
+
+
 
     private void Start()
     {
-        _anim = gameObject.GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
+    }
+
+
+
+    [PunRPC]
+    private void Open()
+    {
+        _anim.SetBool("activate", true);
     }
 }

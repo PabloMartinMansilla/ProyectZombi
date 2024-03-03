@@ -53,7 +53,6 @@ public class EnemyZombi : Enemy, IPunObservable
     {
         if (alive && _animator != null)
         {
-            Debug.Log("camina");
             switch (stateEnemy)
             {
                 case StateEnemy.idel:
