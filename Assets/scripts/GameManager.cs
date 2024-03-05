@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,8 +11,9 @@ public class GameManager : MonoBehaviour
 
     [Header("references")]
 
-    public TMP_Dropdown dropdown;
+    public TMP_Dropdown dropdownGraphics;
     public int calidad;
+    public TMP_Dropdown dropdownScreen;
     public WeaponOne weaponOne;
     [SerializeField] private Image brillo;
     [SerializeField] private Slider sliderBrillo;
@@ -29,15 +31,20 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Cursor.visible = false;
-        calidad = PlayerPrefs.GetInt("numeroDeCalidad", 2);
-        dropdown.value = calidad;
+        calidad = PlayerPrefs.GetInt("numeroDeCalidad" + PhotonNetwork.LocalPlayer.ActorNumber, dropdownGraphics.value);
+        dropdownGraphics.value = calidad;
         cambiocalidad();
+
+        //cambio de pantalla completa
+        dropdownScreen.value = 0;
+        cambiopantalla();
     }
 
 
 
     private void Update()
     {
+        Debug.Log($"el valor es {dropdownGraphics.value}");
         //textAmmo.text = weaponOne.ammo.ToString();
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -48,9 +55,22 @@ public class GameManager : MonoBehaviour
 
     public void cambiocalidad()
     {
-        QualitySettings.SetQualityLevel(dropdown.value);
-        PlayerPrefs.GetInt("numeroDeCalidad", dropdown.value);
-        calidad = dropdown.value;
+        QualitySettings.SetQualityLevel(dropdownGraphics.value);
+        PlayerPrefs.SetInt("numeroDeCalidad" + PhotonNetwork.LocalPlayer.ActorNumber, dropdownGraphics.value);
+        calidad = dropdownGraphics.value;
+    }
+
+
+    public void cambiopantalla()
+    {
+        if (dropdownScreen.value == 0)
+        {
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+        }
+        else
+        { 
+            Screen.fullScreenMode= FullScreenMode.Windowed;
+        }
     }
 
 
