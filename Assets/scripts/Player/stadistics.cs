@@ -31,6 +31,14 @@ public class stadistics : MonoBehaviourPunCallbacks
         _live = true;
         _shield = 100;
 
+
+        GameObject canvas = GameObject.Find("Canvas");
+        Transform imageTransform = canvas.transform.Find("Life");
+        lifeReference = imageTransform.GetComponent<Image>();
+        
+        Transform image2Transform = canvas.transform.Find("Shield");
+        shieldReference = image2Transform.GetComponent<Image>();
+
     }
 
 
@@ -89,7 +97,7 @@ public class stadistics : MonoBehaviourPunCallbacks
     private void TakeShield()
     {
         _shield = _shield - 20;
-        shieldReference.rectTransform.sizeDelta = new Vector2(_shield, shieldReference.rectTransform.sizeDelta.y);
+        shieldReference.rectTransform.sizeDelta = new Vector2(_shield, shieldReference.rectTransform.sizeDelta.y); 
     }
 
 

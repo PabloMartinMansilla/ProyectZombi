@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
     public Text textAmmo;
 
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public TMP_Dropdown dropdownGraphics;
     public int calidad;
     public TMP_Dropdown dropdownScreen;
-    public WeaponOne weaponOne;
+    private WeaponOne weaponOne;
     [SerializeField] private Image brillo;
     [SerializeField] private Slider sliderBrillo;
     [SerializeField] private Slider sliderSonido;
@@ -27,9 +27,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuScreen;
 
 
+    public PhotonView Player;
+    public Transform spawn;
 
     private void Start()
     {
+        PhotonNetwork.ConnectUsingSettings();
         Cursor.visible = false;
         calidad = PlayerPrefs.GetInt("numeroDeCalidad" + PhotonNetwork.LocalPlayer.ActorNumber, dropdownGraphics.value);
         dropdownGraphics.value = calidad;
@@ -42,13 +45,47 @@ public class GameManager : MonoBehaviour
 
 
 
+
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinRandomOrCreateRoom();
+
+    }
+
+    public override void OnJoinedRoom()
+    {
+        GameObject player = PhotonNetwork.Instantiate(Player.name, spawn.position, spawn.rotation);
+        Debug.Log(player.name);
+        player.tag = "Player";
+        weaponOne = player.GetComponentInChildren<WeaponOne>();
+    }
+
+
+
     private void Update()
     {
-        Debug.Log($"el valor es {dropdownGraphics.value}");
-        //textAmmo.text = weaponOne.ammo.ToString();
+
 
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             pausa();
+        }
+
+
+        if (photonView.IsMine)
+        {
+            photonView.RPC("UpdateAmmo", RpcTarget.All, weaponOne.ammo);
+        }
+    }
+
+
+
+    [PunRPC]
+    private void UpdateAmmo(int ammoCount)
+    {
+        //Debug.Log("Received ammo count: " + ammoCount);
+        textAmmo.text = ammoCount.ToString();
+
     }
 
 

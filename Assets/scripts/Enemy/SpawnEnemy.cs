@@ -17,6 +17,7 @@ public class SpawnEnemy : MonoBehaviour
         {
             Instantiate(enemy);
             enemy.transform.position = this.gameObject.transform.position;
+            enemy.tag = "Enemy";
             maxEnemy++;
             StartCoroutine(Spawn());
         }

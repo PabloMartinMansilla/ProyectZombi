@@ -13,7 +13,7 @@ public class EnemyZombi : Enemy, IPunObservable
     [Header("References")]
     private Animator _animator;
     private Rigidbody _rb;
-
+    
 
 
 
@@ -23,6 +23,7 @@ public class EnemyZombi : Enemy, IPunObservable
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<Animator>();
         live = 100;
+        speed = 2;
     }
 
 
@@ -35,10 +36,7 @@ public class EnemyZombi : Enemy, IPunObservable
         if (!photonView.IsMine && PhotonNetwork.IsConnected)
         {
             animations();
-            if (!alive)
-            {
-                Invoke("Dead", _timer);
-            }
+
             return;
         }
 
@@ -85,7 +83,8 @@ public class EnemyZombi : Enemy, IPunObservable
     [PunRPC]
     private void Dead()
     {
-        Destroy(this.gameObject);
+        if (photonView.IsMine)
+            Destroy(this.gameObject);
     }
 
 
@@ -95,6 +94,7 @@ public class EnemyZombi : Enemy, IPunObservable
         if (collision.gameObject.CompareTag("Bullet") && alive)
         {
             stateEnemy = StateEnemy.dead;
+            photonView.RPC("Dead", RpcTarget.AllBuffered);
         }
     }
 
@@ -108,11 +108,13 @@ public class EnemyZombi : Enemy, IPunObservable
         {
             stream.SendNext(transform.position);
             stream.SendNext(stateEnemy);
+            stream.SendNext(alive);
         }
         else
         { 
             transform.position = (Vector3)stream.ReceiveNext();
             stateEnemy = (StateEnemy)stream.ReceiveNext();
+            alive = (bool)stream.ReceiveNext();
         }
     }
 }

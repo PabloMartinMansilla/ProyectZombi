@@ -1,13 +1,16 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviourPunCallbacks
 {
     [Header("reference")]
     public Camera playerCam;
     public GameObject light;
+    public GameObject positionraycast;
 
     [Header("General")]
     [SerializeField] private float _speedRotation;
@@ -57,6 +60,16 @@ public class Player : MonoBehaviourPunCallbacks
     {
         float x = Input.GetAxis("Horizontal") * _speed * Time.deltaTime;
         float z = Input.GetAxis("Vertical") * _speed * Time.deltaTime;
+        
+        
+        RaycastHit ray;
+        if (Physics.Raycast(positionraycast.transform.position, positionraycast.transform.forward, out ray, 1.0f)
+            && !ray.collider.gameObject.CompareTag("Enemy") && !ray.collider.gameObject.CompareTag("Object"))
+
+        {
+            z = 0;
+        }
+        Debug.DrawRay(positionraycast.transform.position, positionraycast.transform.forward * 1.0f, Color.green);
 
         transform.Translate(new Vector3(x, 0.0f, z));
     }
