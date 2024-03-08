@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
+
     public override void OnJoinedRoom()
     {
         GameObject player = PhotonNetwork.Instantiate(Player.name, spawn.position, spawn.rotation);
@@ -76,9 +77,14 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("UpdateAmmo", RpcTarget.All, weaponOne.ammo);
         }
+
+        limitedcursor();
     }
 
-
+    private void limitedcursor()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
 
     [PunRPC]
     private void UpdateAmmo(int ammoCount)
@@ -89,6 +95,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
 
+    #region BUTTONS
 
     public void cambiocalidad()
     {
@@ -102,7 +109,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (dropdownScreen.value == 0)
         {
-            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
         }
         else
         { 
@@ -169,4 +176,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Application.Quit();
     }
+
+    #endregion
 }

@@ -1,7 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
+//using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -60,19 +60,61 @@ public class Player : MonoBehaviourPunCallbacks
     {
         float x = Input.GetAxis("Horizontal") * _speed * Time.deltaTime;
         float z = Input.GetAxis("Vertical") * _speed * Time.deltaTime;
-        
-        
-        RaycastHit ray;
-        if (Physics.Raycast(positionraycast.transform.position, positionraycast.transform.forward, out ray, 1.0f)
-            && !ray.collider.gameObject.CompareTag("Enemy") && !ray.collider.gameObject.CompareTag("Object"))
 
-        {
-            z = 0;
-        }
-        Debug.DrawRay(positionraycast.transform.position, positionraycast.transform.forward * 1.0f, Color.green);
+        RaycastColision(ref x, ref z);
 
         transform.Translate(new Vector3(x, 0.0f, z));
     }
+
+    #region Colisiones Raycast
+    private void RaycastColision(ref float x, ref float z)
+    {
+
+
+        RaycastHit ray2;
+        if (Physics.Raycast(positionraycast.transform.position, positionraycast.transform.right, out ray2, 0.5f))
+        {
+            if (x > 0 && !ray2.collider.gameObject.CompareTag("Object"))
+            {
+                x = 0;
+                return;
+            }
+        }
+        
+        RaycastHit ray3;
+        if (Physics.Raycast(positionraycast.transform.position, -positionraycast.transform.right, out ray3, 0.5f))
+        {
+            if (x < 0 && !ray3.collider.gameObject.CompareTag("Object"))
+            {
+                x = 0;
+                return;
+            }
+        }
+
+
+        RaycastHit ray;
+        if (Physics.Raycast(positionraycast.transform.position, positionraycast.transform.forward, out ray, 0.5f))
+        {
+            if (0 < z && !ray.collider.gameObject.CompareTag("Object"))
+            {
+                z = 0;
+                return;
+            }
+        }
+        
+        RaycastHit ray4;
+        if (Physics.Raycast(positionraycast.transform.position, -positionraycast.transform.forward, out ray4, 0.8f))
+        {
+            if (0 > z && !ray4.collider.gameObject.CompareTag("Object"))
+            {
+                z = 0;
+                return;
+            }
+        }
+    }
+    #endregion
+
+
 
     private void Jump()
     {
@@ -123,6 +165,7 @@ public class Player : MonoBehaviourPunCallbacks
         }
     }
 
+
     private void look()
     {
         _rotationInput.x = Input.GetAxis("Mouse X") * _speedRotation * Time.deltaTime;
@@ -134,6 +177,7 @@ public class Player : MonoBehaviourPunCallbacks
         transform.Rotate(Vector3.up * _rotationInput.x);
         playerCam.transform.localRotation = Quaternion.Euler(-_camVertical, 0f, 0f);
     }
+
 
     private void TurnOnLight()
     {

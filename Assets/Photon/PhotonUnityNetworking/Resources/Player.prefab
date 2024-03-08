@@ -5946,10 +5946,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5590143
+  m_Radius: 0.29429817
   m_Height: 1.8291698
   m_Direction: 1
-  m_Center: {x: 0.029004097, y: 0.9076235, z: 0.13572407}
+  m_Center: {x: 0.05006981, y: 0.9076235, z: 0.13572407}
 --- !u!114 &6683094467448484262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9427,7 +9427,7 @@ Transform:
   - {fileID: 110865720757929924}
   - {fileID: 9169033694545807243}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-8365620924276661838
 MonoBehaviour:

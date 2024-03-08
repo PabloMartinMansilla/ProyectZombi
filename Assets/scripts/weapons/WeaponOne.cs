@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.Pool;
 using TMPro;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class WeaponOne : MonoBehaviour
+public class WeaponOne : MonoBehaviourPunCallbacks
 
 {
     [Header("pooling")]
@@ -96,13 +97,16 @@ public class WeaponOne : MonoBehaviour
             _shootingUp = false;
         }
 
-        if (_pointing && _shootingUp && _shooting && ammo > 0)
-        {
-            StartCoroutine(disparo());
+        if (photonView.IsMine)
+        { 
+            if (_pointing && _shootingUp && _shooting && ammo > 0)
+            {
+                StartCoroutine(shoot());
+            }
         }
     }
 
-    private IEnumerator disparo()
+    private IEnumerator shoot()
     {
         _shooting = false;
 
@@ -121,10 +125,17 @@ public class WeaponOne : MonoBehaviour
         }
 
         ammo--;
+        photonView.RPC("updateAmmo", RpcTarget.All, ammo);
 
         yield return new WaitForSeconds(0.01f);
 
         _shooting = true;
+    }
+
+    [PunRPC]
+    private void updateAmmo(int newAmmo)
+    {
+        ammo = newAmmo;
     }
 
     private void kill(Bullet bullet)
